@@ -80,7 +80,7 @@ public class User {
 	public boolean equals(Object obj) {
 		boolean isTrue;
 		
-		if ()
+//		if ()
 		
 			
 		return true;

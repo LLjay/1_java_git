@@ -20,8 +20,8 @@ public class LightingController {
 		return mData.saveMember(mem);
 	}
 	
-	public List<Device> checkDeviceList() {
-		
-	}
+//	public List<Device> checkDeviceList() {
+//		
+//	}s
 
 }

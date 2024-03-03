@@ -1,8 +1,8 @@
 package com.mini.run;
 
-import com.mini.view.old.LightingMenu;
+import com.mini.view.LightingMenu;
 
-public class Run {
+public class LightingRun {
 
 	public static void main(String[] args) {
 		new LightingMenu().startMenu();

@@ -1,4 +1,4 @@
-package com.mini.view;
+package com.mini.view.old;
 
 import java.util.Scanner;
 
@@ -252,7 +252,7 @@ public class LightingMenu {
 	
 	public void checkDeviceList() {
 		System.out.println("=====전체 장비 리스트 조회=====");
-		lc.checkDeviceList();
+//		lc.checkDeviceList();
 		
 	}
 	
