@@ -88,9 +88,7 @@ public class LightingController {
 		List<Device> list = dvDao.searchDevice(dvName);
 		
 		if (list != null) {
-			for(int i = 0; i < list.size(); i++) {
 				new LightingMenu().displayDeviceList(list);
-			}
 		} else {
 			new LightingMenu().displayFail("검색 결과가 없습니다.");
 		}
@@ -163,7 +161,7 @@ public class LightingController {
 	public void selectInOutList() {
 		List<InOutList> list = ioSv.selectInOutList();
 		
-		if (list != null) {
+		if (!list.isEmpty()) {
 			new LightingMenu().displayInOutList(list);
 		} else {
 			new LightingMenu().displayFail("등록된 반입출 정보가 없습니다.");
@@ -180,7 +178,7 @@ public class LightingController {
 	public void selectMemRollList() {
 		List<MemberRoll> list = mrSv.selectMemRollList();
 		
-		if (list != null) {
+		if (!list.isEmpty()) {
 			new LightingMenu().displayMemRollList(list);
 		} else {
 			new LightingMenu().displayFail("등록된 공연 정보가 없습니다.");
@@ -215,7 +213,6 @@ public class LightingController {
 	public void registProduction(String category, String title, String theatre, String opening, String closing) {
 		Date openDate = Date.valueOf(opening);
 		Date closeDate = Date.valueOf(closing);
-		// Date.valueOf(String 형식) => String을 sql Date형식으로 바꿈
 		
 		Production pro = new Production(category, title, theatre, openDate, closeDate);
 		

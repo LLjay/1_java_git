@@ -98,11 +98,12 @@ public class LightingMenu {
 	 */
 	public void managerMainMenu() {
 		while(true) {
+			System.out.println();
 			System.out.println("=====Lighting Program=====");
 			System.out.println("1. 장비 조회 및 관리");
 			System.out.println("2. 장비 반입/반출 관리");
 			System.out.println("3. 공연 정보 관리");
-//			System.out.println("8. 회원 관리");
+			System.out.println("8. 회원 관리");
 			System.out.println("9. 마이페이지");
 			System.out.println("0. 프로그램 종료");
 			System.out.print("메뉴 선택 : ");
@@ -119,9 +120,9 @@ public class LightingMenu {
 			case 3 :
 				this.managerProductionMenu();
 				break;
-//			case 8 :
-//				this.memberManageMenu();
-//				break;
+			case 8 :
+				this.memberManageMenu();
+				break;
 			case 9 :
 				this.myPage();
 				break;
@@ -140,13 +141,14 @@ public class LightingMenu {
 	 */
 	public void memberMainMenu() {
 		while(true) {
+			System.out.println();
 			System.out.println("=====Lighting Program=====");
 			System.out.println("1. 장비 조회");
 			System.out.println("2. 장비 반입/반출 관리");
 			System.out.println("3. 공연 정보 조회");
 			System.out.println("9. 마이페이지");
 			System.out.println("0. 프로그램 종료");
-			System.out.println("메뉴 선택");
+			System.out.print("메뉴 선택 : ");
 			int menuNum = sc.nextInt();
 			sc.nextLine();
 			
@@ -181,13 +183,14 @@ public class LightingMenu {
 	 */
 	public void managerDeviceMenu() {
 		while(true) {
+			System.out.println();
 			System.out.println("=====장비 조회 및 관리=====");
 			System.out.println("1. 전체 장비 리스트 조회");
 			System.out.println("2. 장비 검색");
 			System.out.println("3. 장비 등록");
 			System.out.println("8. 장비 삭제");
 			System.out.println("0. 메인 메뉴로 돌아가기");
-			System.out.println("메뉴 선택");
+			System.out.print("메뉴 선택 : ");
 			int menuNum = sc.nextInt();
 			sc.nextLine();
 			
@@ -217,11 +220,12 @@ public class LightingMenu {
 	 */
 	public void memberDeviceMenu() {
 		while(true) {
+			System.out.println();
 			System.out.println("=====장비 조회=====");
 			System.out.println("1. 전체 장비 리스트 조회");
 			System.out.println("2. 장비 검색");
 			System.out.println("0. 메인 메뉴로 돌아가기");
-			System.out.print("메뉴 선택");
+			System.out.print("메뉴 선택 : ");
 			int menuNum = sc.nextInt();
 			sc.nextLine();
 			
@@ -244,7 +248,6 @@ public class LightingMenu {
 	 * 전체 장비 리스트 요청 메소드
 	 */
 	public void selectDeviceList() {
-		System.out.println("=====전체 장비 리스트 조회=====");
 		lc.selectDeviceList();
 	}
 	
@@ -264,7 +267,7 @@ public class LightingMenu {
 	public void registDevice() {
 		System.out.println("-장비 종류 선택-");
 		System.out.println("1. MovingLight 2. Convention 3. Line");
-		System.out.println("종류 번호 입력 : ");
+		System.out.print("종류 번호 입력 : ");
 		int menuNum = sc.nextInt();
 		sc.nextLine();
 		
@@ -366,11 +369,12 @@ public class LightingMenu {
 	
 	public void InOutMenu() {
 		while(true) {
+			System.out.println();
 			System.out.println("=====장비 반입/반출 관리=====");
 			System.out.println("1. 전체 반입/반출 리스트 조회");
 			System.out.println("2. 반입/반출 등록");
 			System.out.println("0. 메인 메뉴로 돌아가기");
-			System.out.print("메뉴 선택");
+			System.out.print("메뉴 선택 : ");
 			int menuNum = sc.nextInt();
 			sc.nextLine();
 			
@@ -424,6 +428,7 @@ public class LightingMenu {
 	 */
 	public void managerProductionMenu() {
 		while(true) {
+			System.out.println();
 			System.out.println("=====공연 정보 관리=====");
 			System.out.println("1. 전체 공연 및 어시스턴트 조회");
 			System.out.println("2. 공연 검색");
@@ -460,6 +465,7 @@ public class LightingMenu {
 	 */
 	public void memberProductionMenu() {
 		while(true) {
+			System.out.println();
 			System.out.println("=====공연 조회=====");
 			System.out.println("1. 전체 공연 및 어시스턴트 조회");
 			System.out.println("2. 공연 검색");
@@ -583,6 +589,8 @@ public class LightingMenu {
 	
 	
 	// 9. 마이페이지
+	
+	
 	public void myPage() {
 		while(true) {
 			System.out.println("=====" + user.getUserName() + "님의 마이페이지=====");
@@ -591,7 +599,6 @@ public class LightingMenu {
 			System.out.println("현재 포인트 : " + user.getUserPoint());
 			System.out.println();
 			System.out.println("1. 내 공연 정보");
-//			System.out.println("2. 회원 정보 수정");
 			System.out.println("0. 메인 메뉴로 돌아가기");
 			System.out.print("메뉴 선택 : ");
 			int menuNum = sc.nextInt();

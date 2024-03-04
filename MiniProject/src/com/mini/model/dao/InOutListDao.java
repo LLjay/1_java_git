@@ -46,7 +46,7 @@ public class InOutListDao {
 			
 			list.add(io);
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 		} finally {
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(stmt);
