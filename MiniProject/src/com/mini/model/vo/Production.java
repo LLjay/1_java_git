@@ -83,7 +83,7 @@ public class Production {
 
 	@Override
 	public String toString() {
-		return "[" + proNo + "] 종류 : " + category + " / 공연명 : " + title + " / 극장 : " + theatre
+		return "종류 : " + category + " / 공연명 : " + title + " / 극장 : " + theatre
 				+ " / 개막일 : " + opening + " / 폐막일 : " + closing;
 	}
 	

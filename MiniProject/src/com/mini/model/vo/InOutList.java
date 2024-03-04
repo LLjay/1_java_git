@@ -105,7 +105,7 @@ public class InOutList {
 
 	@Override
 	public String toString() {
-		return "[" + inOutNo + "] 공연명 : " + pro.getTitle() + " / 장비명 : " + device.getDvName() + " / 반출수량 : " + outQty
+		return "공연명 : " + pro.getTitle() + " / 장비명 : " + device.getDvName() + " / 반출수량 : " + outQty
 				+ " / 반입수량 : " + inQty + " / 반출일 : " + outDate + " / 반입일 : " + inDate + " / 비고 : " + memo;
 	}
 	

@@ -1,7 +1,6 @@
 package com.mini.model.vo;
 
 public class MemberRoll {
-	private int rollNo;
 	private Member mem;
 	private Production pro;
 	private String roll;
@@ -15,22 +14,6 @@ public class MemberRoll {
 		this.mem = mem;
 		this.pro = pro;
 		this.roll = roll;
-	}
-
-	public MemberRoll(int rollNo, Member mem, Production pro, String roll) {
-		super();
-		this.rollNo = rollNo;
-		this.mem = mem;
-		this.pro = pro;
-		this.roll = roll;
-	}
-
-	public int getRollNo() {
-		return rollNo;
-	}
-
-	public void setRollNo(int rollNo) {
-		this.rollNo = rollNo;
 	}
 
 	public Member getMem() {
@@ -59,7 +42,11 @@ public class MemberRoll {
 
 	@Override
 	public String toString() {
-		return "[" + rollNo + "] 담당자 : " + mem.getUserName() + " / 공연명 : " + pro.getTitle() + " / 역할 : " + roll;
+		if (this.mem.getUserName() != null) {
+			return this.pro.toString() + " / " + this.roll + " : " + this.mem.getUserName();
+		} else {
+			return this.pro.toString();
+		}
 	}
 	
 	

@@ -59,7 +59,7 @@ public class Device {
 
 	@Override
 	public String toString() {
-		return "[" + dvNo + "] 종류 : " + category + " / 장비명 : " + dvName + " / 총수량 : " + totalQty;
+		return "종류 : " + category + " / 장비명 : " + dvName + " / 총수량 : " + totalQty;
 	}
 	
 	
