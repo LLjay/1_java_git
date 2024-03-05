@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mini.common.JDBCTemplate;
 import com.mini.model.vo.Convention;
 import com.mini.model.vo.Device;
 import com.mini.model.vo.Line;
@@ -16,15 +17,176 @@ import com.mini.model.vo.MovingLight;
 
 public class DeviceDao {
 	
-	public List<Device> selectDeviceList() {
+	public List<Device> selectDeviceList(Connection conn) {
+		List<Device> list = new ArrayList<>();
+		Statement stmt = null;
+		ResultSet rset = null;
 		
 		String sql1 = "SELECT * FROM TB_DEVICE WHERE DV_CATEGORY = 'MovingLight'";
 		String sql2 = "SELECT * FROM TB_DEVICE WHERE DV_CATEGORY = 'Convention'";
 		String sql3 = "SELECT * FROM TB_DEVICE WHERE DV_CATEGORY = 'Line'";
 		
-		return this.selectDevice(sql1, sql2, sql3);
-		
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(sql1);
+			list.addAll(this.addListMovingLight(rset));
+			
+			rset = stmt.executeQuery(sql2);
+			list.addAll(this.addListConvention(rset));
+			
+			rset = stmt.executeQuery(sql3);
+			list.addAll(this.addListLine(rset));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(stmt);
+		}
+		return list;
 	}
+	
+	public List<Device> selectDeviceByName(Connection conn, String dvName) {
+		List<Device> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = "SELECT * FROM TB_DEVICE WHERE DV_CATEGORY = ? AND DV_NAME LIKE '%' || ? || '%'";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "MovingLight");
+			pstmt.setString(2, dvName);
+			
+			rset = pstmt.executeQuery();
+			
+			list.addAll(addListMovingLight(rset));
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "Convention");
+			pstmt.setString(2, dvName);
+			
+			rset = pstmt.executeQuery();
+			
+			list.addAll(addListConvention(rset));
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "Line");
+			pstmt.setString(2, dvName);
+			
+			rset = pstmt.executeQuery();
+			
+			list.addAll(addListLine(rset));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	public List<Device> addListMovingLight(ResultSet rset) {
+		List<Device> list = new ArrayList<>();
+		try {
+			while(rset.next()) {
+				Device d = new MovingLight();
+				if (d instanceof MovingLight) {
+					d = new MovingLight();
+					d.setDvNo(rset.getInt("dv_no"));
+					d.setCategory(rset.getString("dv_category"));
+					d.setDvName(rset.getString("dv_name"));
+					((MovingLight) d).setManufacture(rset.getString("dv_manufacture"));
+					d.setTotalQty(rset.getInt("dv_totalqty"));
+					((MovingLight) d).setPower(rset.getInt("dv_power"));
+					((MovingLight) d).setWeight(rset.getDouble("dv_weight"));
+					((MovingLight) d).setLamp(rset.getString("dv_lamp"));
+					
+					list.add(d);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public List<Device> addListConvention(ResultSet rset) {
+		List<Device> list = new ArrayList<>();
+		try {
+			while(rset.next()) {
+				Device d = new Convention();
+				if (d instanceof Convention) {
+					d.setDvNo(rset.getInt("dv_no"));
+					d.setCategory(rset.getString("dv_category"));
+					d.setDvName(rset.getString("dv_name"));
+					((Convention) d).setManufacture(rset.getString("dv_manufacture"));
+					d.setTotalQty(rset.getInt("dv_totalqty"));
+					((Convention) d).setPower(rset.getInt("dv_power"));
+					((Convention) d).setWeight(rset.getDouble("dv_weight"));
+					
+					list.add(d);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public List<Device> addListLine(ResultSet rset) {
+		List<Device> list = new ArrayList<>();
+		try {
+			while(rset.next()) {
+				Device d = new Line();
+				if (d instanceof Line) {
+					d.setDvNo(rset.getInt("dv_no"));
+					d.setCategory(rset.getString("dv_category"));
+					d.setDvName(rset.getString("dv_name"));
+					d.setTotalQty(rset.getInt("dv_totalqty"));
+					
+					list.add(d);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public int deleteDevice(Connection conn, Device d) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = "DELETE FROM TB_DEVICE WHERE DV_NAME = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, d.getDvName());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public List<Device> searchDevice(String dvName) {
 		String sql1 = "SELECT * FROM TB_DEVICE "

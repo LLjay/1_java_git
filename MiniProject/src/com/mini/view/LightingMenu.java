@@ -258,7 +258,7 @@ public class LightingMenu {
 		System.out.print("장비명 검색 : ");
 		String dvName = sc.nextLine();
 		
-		lc.searchDevice(dvName);
+		lc.selectDeviceByName(dvName);
 	}
 	
 	/**
@@ -347,11 +347,14 @@ public class LightingMenu {
 		lc.registLine(dvName, totalQty);
 	}
 	
+	/**
+	 * 삭제하고자 하는 장비명을 검색해 번호를 받아 삭제 요청을 보내는 메소드
+	 */
 	public void deleteDevice() {
 		System.out.print("장비명 검색 : ");
 		String dvName = sc.nextLine();
 		
-		List<Device> list = lc.searchDevice(dvName);
+		List<Device> list = lc.selectDeviceByName(dvName);
 		
 		System.out.print("삭제하고자 하는 장비 번호 선택 : ");
 		int dvNum = sc.nextInt();
@@ -407,15 +410,33 @@ public class LightingMenu {
 		int proNum = sc.nextInt();
 		sc.nextLine();
 		
-//		System.out.print("장비명 검색 : ");
-//		String dvName = sc.nextLine().trim();
-//		
-//		List<Production> list2 = lc.selectDeviceList(proTitle);
-//		
-//		System.out.print("공연 선택(번호 입력) : ");
-//		int proNum = sc.nextInt();
-//		sc.nextLine();
+		System.out.print("장비명 검색 : ");
+		String dvName = sc.nextLine().trim();
 		
+		List<Device> list2 = lc.selectDeviceByName(dvName);
+		
+		System.out.print("공연 선택(번호 입력) : ");
+		int dvNum = sc.nextInt();
+		sc.nextLine();
+		
+		System.out.print("반출 수량 : ");
+		int outQty = sc.nextInt();
+		sc.nextLine();
+		
+		System.out.print("반입 수량 : ");
+		int inQty = sc.nextInt();
+		sc.nextLine();
+		
+		System.out.print("반출일 입력(YYYY-MM-DD 형식) : ");
+		String outDate = sc.nextLine();
+		
+		System.out.print("반입일 입력(YYYY-MM-DD 형식) : ");
+		String inDate = sc.nextLine();
+		
+		System.out.print("비고 : ");
+		String memo = sc.nextLine();
+		
+		lc.registInOut(list1.get(proNum-1), list2.get(dvNum-1), outQty, inQty, outDate, inDate, memo);
 		
 	}
 
@@ -470,7 +491,7 @@ public class LightingMenu {
 			System.out.println("1. 전체 공연 및 어시스턴트 조회");
 			System.out.println("2. 공연 검색");
 			System.out.println("0. 메인 메뉴로 돌아가기");
-			System.out.print("메뉴 선택");
+			System.out.print("메뉴 선택 : ");
 			int menuNum = sc.nextInt();
 			sc.nextLine();
 			

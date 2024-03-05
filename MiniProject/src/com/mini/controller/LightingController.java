@@ -15,6 +15,7 @@ import com.mini.model.vo.Member;
 import com.mini.model.vo.MemberRoll;
 import com.mini.model.vo.MovingLight;
 import com.mini.model.vo.Production;
+import com.mini.service.DeviceService;
 import com.mini.service.InOutListService;
 import com.mini.service.MemRollService;
 import com.mini.service.MemberService;
@@ -31,6 +32,7 @@ public class LightingController {
 	ProductionService proSv = new ProductionService();
 	MemRollService mrSv = new MemRollService();
 	InOutListService ioSv = new InOutListService();
+	DeviceService dvSv = new DeviceService();
 	
 	// 0. 시작 메뉴
 	/**
@@ -76,7 +78,7 @@ public class LightingController {
 	 * 전체 장비 리스트를 DeviceDao에 요청해 출력 메소드 사용
 	 */
 	public void selectDeviceList() {
-		List<Device> list = dvDao.selectDeviceList();
+		List<Device> list = dvSv.selectDeviceList();
 		new LightingMenu().displayDeviceList(list);
 	}
 	
@@ -84,10 +86,10 @@ public class LightingController {
 	 * 장비명 키워드를 전달 받아 DeviceDao에 요청해 검색 결과 list 출력
 	 * @param dvName
 	 */
-	public List<Device> searchDevice(String dvName) {
-		List<Device> list = dvDao.searchDevice(dvName);
+	public List<Device> selectDeviceByName(String dvName) {
+		List<Device> list = dvSv.selectDeviceByName(dvName);
 		
-		if (list != null) {
+		if (!list.isEmpty()) {
 				new LightingMenu().displayDeviceList(list);
 		} else {
 			new LightingMenu().displayFail("검색 결과가 없습니다.");
@@ -146,13 +148,13 @@ public class LightingController {
 	 * @param d
 	 */
 	public void deleteDevice(Device d) {
-//		int result = dvDao.deleteDevice(d);
-//		
-//		if (result > 0) {
-//			new LightingMenu().displaySuccess("장비 삭제에 성공했습니다.");
-//		} else {
-//			new LightingMenu().displayFail("장비 삭제에 실패했습니다.");
-//		}
+		int result = dvSv.deleteDevice(d);
+		
+		if (result > 0) {
+			new LightingMenu().displaySuccess("장비 삭제에 성공했습니다.");
+		} else {
+			new LightingMenu().displayFail("장비 삭제에 실패했습니다.");
+		}
 	}
 	
 	
@@ -161,10 +163,25 @@ public class LightingController {
 	public void selectInOutList() {
 		List<InOutList> list = ioSv.selectInOutList();
 		
-		if (!list.isEmpty()) {
-			new LightingMenu().displayInOutList(list);
-		} else {
+		if (list.isEmpty()) {
 			new LightingMenu().displayFail("등록된 반입출 정보가 없습니다.");
+		} else {
+			new LightingMenu().displayInOutList(list);
+		}
+	}
+	
+	public void registInOut(Production pro, Device d, int outQty, int inQty, String outDate, String inDate, String memo) {
+		Date newOutDate = Date.valueOf(outDate);
+		Date newInDate = Date.valueOf(inDate);
+		
+		InOutList iol = new InOutList(pro, d, outQty, inQty, newOutDate, newInDate, memo);
+		
+		int result = ioSv.registInOut(iol);
+		
+		if (result > 0) {
+			new LightingMenu().displaySuccess("등록에 성공했습니다.");
+		} else {
+			new LightingMenu().displayFail("등록에 실패했습니다.");
 		}
 	}
 	
@@ -192,7 +209,7 @@ public class LightingController {
 	public List<Production> selectProductionByKeyword(String keyword) {
 		List<Production> list = proSv.selectProductionByKeyword(keyword);
 	
-		if (list != null) {
+		if (!list.isEmpty()) {
 			new LightingMenu().displayProductionList(list);
 		} else {
 			new LightingMenu().displayFail("키워드에 해당하는 공연이 없습니다.");
@@ -250,7 +267,7 @@ public class LightingController {
 	
 	public List<Member> selectMemberByName(String userName) {
 		List<Member> list = memSv.selectMemberByName(userName);
-		if (list != null) {
+		if (!list.isEmpty()) {
 			new LightingMenu().displayMemberList(list);
 		} else {
 			new LightingMenu().displayFail("회원 정보 불러오기에 실패했습니다.");
