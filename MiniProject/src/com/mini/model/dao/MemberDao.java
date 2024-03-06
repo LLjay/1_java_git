@@ -1,5 +1,8 @@
 package com.mini.model.dao;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,12 +11,25 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import com.mini.common.JDBCTemplate;
 import com.mini.model.vo.Member;
 
 public class MemberDao {
 	
+	Properties prop = new Properties();
+	
+	// 멤버다오를 만들 때마다 이 메소드가 실행 되도록 생성자를 만들어준 것
+	public MemberDao() {
+		try {
+			prop.load(new FileInputStream("resources/query.xml"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * 전달 받은 아이디와 비밀번호에 해당하는 데이터 한 가지 조회해 Member 반환
 
@@ -63,7 +79,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String sql = "SELECT * FROM TB_MEMBER WHERE USER_NAME LIKE '%' || ? || '%'";
+		String sql = prop.getProperty("selectMemberByName");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="logIn">
+	SELECT *
+	FROM TB_MEMBER
+	WHERE USER_ID = ?
+	AND USER_PWD = ?
+</entry>
+<entry key="selectMemberByName">
+	SELECT *
+	FROM TB_MEMBER
+	WHERE USER_NAME LIKE '%' || ? || '%'
+</entry>
+</properties>
