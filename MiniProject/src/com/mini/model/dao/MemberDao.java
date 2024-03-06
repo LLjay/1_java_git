@@ -23,7 +23,7 @@ public class MemberDao {
 	// 멤버다오를 만들 때마다 이 메소드가 실행 되도록 생성자를 만들어준 것
 	public MemberDao() {
 		try {
-			prop.load(new FileInputStream("resources/query.xml"));
+			prop.loadFromXML(new FileInputStream("resources/query.xml"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -52,7 +52,7 @@ public class MemberDao {
 			
 			rset = pstmt.executeQuery();
 			
-			list.addAll(list);
+			list.addAll(this.addListMember(m, rset));
 			
 		} catch (SQLException e) {
 			
@@ -93,6 +93,25 @@ public class MemberDao {
 			JDBCTemplate.close(pstmt);
 		}
 		return list;
+	}
+	
+	public int signUp(Connection conn, Member mem) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("signUp");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mem.getUserId());
+			pstmt.setString(2, mem.getUserPwd());
+			pstmt.setString(3, mem.getUserName());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	/**

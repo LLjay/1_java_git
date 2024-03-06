@@ -8,11 +8,10 @@ import com.mini.model.dao.DeviceDao;
 import com.mini.model.vo.Device;
 
 public class DeviceService {
-	DeviceDao dvDao = new DeviceDao();
 	
 	public List<Device> selectDeviceList() {
 		Connection conn = JDBCTemplate.getConnection();
-		List<Device> list = dvDao.selectDeviceList(conn);
+		List<Device> list = new DeviceDao().selectDeviceList(conn);
 		JDBCTemplate.close(conn);
 		
 		return list;
@@ -20,7 +19,7 @@ public class DeviceService {
 	
 	public List<Device> selectDeviceByName(String dvName) {
 		Connection conn = JDBCTemplate.getConnection();
-		List<Device> list = dvDao.selectDeviceByName(conn, dvName);
+		List<Device> list = new DeviceDao().selectDeviceByName(conn, dvName);
 		JDBCTemplate.close(conn);
 		
 		return list;
@@ -28,7 +27,7 @@ public class DeviceService {
 	
 	public int deleteDevice(Device d) {
 		Connection conn = JDBCTemplate.getConnection();
-		int result = dvDao.deleteDevice(conn, d);
+		int result = new DeviceDao().deleteDevice(conn, d);
 		
 		if (result > 0) {
 			JDBCTemplate.commit(conn);

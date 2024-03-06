@@ -10,15 +10,13 @@ import com.mini.model.vo.Production;
 
 public class ProductionService {
 	
-	ProductionDao proDao = new ProductionDao();
-	
 	/**
 	 * 전체 공연 정보를 ProductionDao에 요청해 반환하는 메소드
 	 * @return
 	 */
 	public List<Production> selectProductionList() {
 		Connection conn = JDBCTemplate.getConnection();
-		List<Production> list = proDao.selectProductionList(conn);
+		List<Production> list = new ProductionDao().selectProductionList(conn);
 		JDBCTemplate.close(conn);
 		
 		return list;
@@ -31,7 +29,7 @@ public class ProductionService {
 	 */
 	public List<Production> selectProductionByKeyword(String keyword) {
 		Connection conn = JDBCTemplate.getConnection();
-		List<Production> list = proDao.selectProductionByKeyword(conn, keyword);
+		List<Production> list = new ProductionDao().selectProductionByKeyword(conn, keyword);
 		JDBCTemplate.close(conn);
 		
 		return list;
@@ -39,7 +37,7 @@ public class ProductionService {
 
 	public int registProduction(Production pro) {
 		Connection conn = JDBCTemplate.getConnection();
-		int result = proDao.registProduction(conn, pro);
+		int result = new ProductionDao().registProduction(conn, pro);
 		
 		if (result > 0) {
 			JDBCTemplate.commit(conn);

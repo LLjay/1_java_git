@@ -10,11 +10,10 @@ import com.mini.model.vo.InOutList;
 import com.mini.model.vo.Production;
 
 public class InOutListService {
-	InOutListDao ioDao = new InOutListDao();	
 
 	public List<InOutList> selectInOutList() {
 		Connection conn = JDBCTemplate.getConnection();
-		List<InOutList> list = ioDao.selectInOutList(conn);
+		List<InOutList> list = new InOutListDao().selectInOutList(conn);
 		JDBCTemplate.close(conn);
 		
 		return list;
@@ -22,7 +21,7 @@ public class InOutListService {
 	
 	public int registInOut(InOutList iol) {
 		Connection conn = JDBCTemplate.getConnection();
-		int result = ioDao.registInOut(conn, iol);
+		int result = new InOutListDao().registInOut(conn, iol);
 		
 		if (result > 0) {
 			JDBCTemplate.commit(conn);

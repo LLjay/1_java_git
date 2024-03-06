@@ -63,7 +63,7 @@ public class LightingController {
 	 */
 	public void signUp(String id, String password, String userName) {
 		Member mem = new Member(id, password, userName);
-		int result = memDao.insertMember(mem);
+		int result = memSv.insertMember(mem);
 			
 		if (result > 0) {
 			new LightingMenu().displaySuccess("회원가입에 성공했습니다.");

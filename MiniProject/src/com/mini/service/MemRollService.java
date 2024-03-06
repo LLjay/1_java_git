@@ -10,7 +10,6 @@ import com.mini.model.vo.MemberRoll;
 import com.mini.model.vo.Production;
 
 public class MemRollService {
-	MemRollDao mrDao = new MemRollDao();
 	
 	/**
 	 * 전체 공연 정보를 ProductionDao에 요청해 반환하는 메소드
@@ -18,7 +17,7 @@ public class MemRollService {
 	 */
 	public List<MemberRoll> selectMemRollList() {
 		Connection conn = JDBCTemplate.getConnection();
-		List<MemberRoll> list = mrDao.selectMemRollList(conn);
+		List<MemberRoll> list = new MemRollDao().selectMemRollList(conn);
 		JDBCTemplate.close(conn);
 		
 		return list;
@@ -27,7 +26,7 @@ public class MemRollService {
 	
 	public int registMemRoll(MemberRoll mr) {
 		Connection conn = JDBCTemplate.getConnection();
-		int result = mrDao.registMemRoll(conn, mr);
+		int result = new MemRollDao().registMemRoll(conn, mr);
 		
 		if (result > 0) {
 			JDBCTemplate.commit(conn);
@@ -41,7 +40,7 @@ public class MemRollService {
 
 	public List<MemberRoll> selectMyMemRollList(Member user) {
 		Connection conn = JDBCTemplate.getConnection();
-		List<MemberRoll> list = mrDao.selectMyMemRollList(conn, user);
+		List<MemberRoll> list = new MemRollDao().selectMyMemRollList(conn, user);
 		JDBCTemplate.close(conn);
 		
 		return list;
