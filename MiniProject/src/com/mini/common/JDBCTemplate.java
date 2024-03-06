@@ -25,6 +25,7 @@ public class JDBCTemplate {
 		
 		try {
 			prop.load(new FileInputStream("resources/driver.properties"));
+			// prop의 메소드를 사용하기 위해 resources 경로에서 driver.properties 파일에서 읽어들이겠다는 뜻
 			
 			Class.forName(prop.getProperty("driver"));
 			conn = DriverManager.getConnection(prop.getProperty("url"), prop.getProperty("username"), prop.getProperty("password"));

@@ -12,4 +12,6 @@
 	FROM TB_MEMBER
 	WHERE USER_NAME LIKE '%' || ? || '%'
 </entry>
+<entry key="">
+</entry>
 </properties>

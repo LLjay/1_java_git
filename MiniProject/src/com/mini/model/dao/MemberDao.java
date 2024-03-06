@@ -41,10 +41,9 @@ public class MemberDao {
 		Member m = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+		List<Member> list = new ArrayList<>();
 		
-		String sql = "SELECT * FROM TB_MEMBER"
-				+ " WHERE USER_ID = ?"
-				+ " AND USER_PWD = ?";
+		String sql = prop.getProperty("logIn");
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -53,9 +52,7 @@ public class MemberDao {
 			
 			rset = pstmt.executeQuery();
 			
-			if (rset.next()) {
-				m = this.setFieldMember(m, rset);
-			}
+			list.addAll(list);
 			
 		} catch (SQLException e) {
 			
@@ -64,7 +61,7 @@ public class MemberDao {
 			JDBCTemplate.close(pstmt);
 		}
 		
-		return m;
+		return list.get(0);
 	}
 	
 	/**
@@ -87,10 +84,7 @@ public class MemberDao {
 			
 			rset = pstmt.executeQuery();
 			
-			while(rset.next()) {
-				m = this.setFieldMember(m, rset);
-				list.add(m);
-			}
+			list.addAll(this.addListMember(m, rset));
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -107,8 +101,11 @@ public class MemberDao {
 	 * @param rset
 	 * @return
 	 */
-	public Member setFieldMember(Member m, ResultSet rset) {
+	public List<Member> addListMember(Member m, ResultSet rset) {
+		List<Member> list = new ArrayList<>();
+		
 		try {
+			while(rset.next()) {
 			m = new Member();
 			m.setUserNo(rset.getInt("user_no"));
 			m.setUserId(rset.getString("user_id"));
@@ -118,10 +115,12 @@ public class MemberDao {
 			m.setUserPoint(rset.getInt("user_point"));
 			m.setEnrollDate(rset.getDate("enroll_date"));
 			
+			list.add(m);
+			}
 		} catch (SQLException e) {
 
 		}
-		return m;
+		return list;
 	}
 	
 	/**
